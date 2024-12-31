@@ -8,11 +8,13 @@ namespace Modelo.Core.Entities
 {
     public class Modelo : BaseEntities
     {
-        public Modelo(string name)
+        public Modelo(string fullName, int age)
         {
-            Name = name;
+            FullName = fullName;
+            Age = age;
         }
 
-        public string Name { get; set; }
+        public string FullName { get; set; }
+        public int Age { get; set; }
     }
 }
