@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Modelo.Core.Entities
 {
-    public class BaseEntities
+    public class BaseEntity
     {
-        public BaseEntities()
+        public BaseEntity()
         {
             
             CreatedAt = DateTime.Now;

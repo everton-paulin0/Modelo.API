@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Modelo.API.Models;
+using Modelo.API.Persistence;
 using Modelo.API.Services;
 
 namespace Modelo.API.Controllers
@@ -10,10 +11,12 @@ namespace Modelo.API.Controllers
     public class ModelosController : ControllerBase
     {
         private readonly IConfigService _configService;
+        private readonly ModelDbContext _context;
 
-        public ModelosController(IConfigService configService)
+        public ModelosController(IConfigService configService , ModelDbContext context)
         {
             _configService = configService;
+            _context = context;
         }
 
         [HttpPost]
@@ -37,7 +40,7 @@ namespace Modelo.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, UpdateModeloInputModel model)
+        public IActionResult Put(int id, UpdateModelInputModel model)
         {
             return NoContent ();
         }

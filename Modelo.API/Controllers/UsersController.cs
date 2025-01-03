@@ -10,7 +10,7 @@ namespace Modelo.API.Controllers
     public class UsersController : ControllerBase
     {
         [HttpPost]
-        public IActionResult Post()
+        public IActionResult Post(CreateUserInputModel model)
         {
             return Ok();
         }
@@ -28,7 +28,7 @@ namespace Modelo.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, UpdateModeloInputModel model)
+        public IActionResult Put(int id, UpdateModelInputModel model)
         {
             return NoContent();
         }

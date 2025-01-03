@@ -1,6 +1,6 @@
 ﻿namespace Modelo.API.Models
 {
-    public class UpdateModeloInputModel
+    public class UpdateModelInputModel
     {
         public int IdModelo { get; set; }
         public string FullName { get; set; }

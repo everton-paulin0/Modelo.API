@@ -6,15 +6,23 @@ using System.Threading.Tasks;
 
 namespace Modelo.Core.Entities
 {
-    public class User : BaseEntities
+    public class User : BaseEntity
     {
-        public User(string userName, EnumLevel level)
+        public User(string userName, string emailAddress, EnumLevel level, bool isActive) : base()
         {
             UserName = userName;
-            Level = level;
+            EmailAddress = emailAddress;
+
+
+            Level = EnumLevel.Comum;
+
+            IsActive = true;
         }
 
         public string UserName { get; set; }
+        public string EmailAddress { get; set; }
         public EnumLevel Level { get; set; }
+        public Model Model { get; set; }
+        public bool IsActive { get; set; }
     }
 }
