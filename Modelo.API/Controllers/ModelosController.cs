@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Modelo.API.Models;
 using Modelo.API.Persistence;
 using Modelo.API.Services;
@@ -22,19 +23,35 @@ namespace Modelo.API.Controllers
         [HttpPost]
         public IActionResult Post(CreateModeloInputModel model)
         {
+            var models = model.ToEntity();
+
+            _context.Models.Add(models);
+            _context.SaveChanges();
+            
             return CreatedAtAction(nameof(GetById), new {id= 1}, model);
         }
 
         [HttpGet]
-        public IActionResult Get(string search)
+        public IActionResult Get(string search = "")
         {
+            var models = _context.Models
+                .Include(m=> m.Users)
+                .Where(m => m.IsActive).ToList();
+
+            var model = models.Select(ModelItemViewModel.FromEntity).ToList();
+            
             return Ok();
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            throw new Exception();
+            var models =_context.Models
+                .Include (m=> m.Users)
+                .Include(m=> m.Comment)
+                .SingleOrDefault(m => m.Id == id);
+
+            var model = ModelViewModel.FromEntity(models);
 
             return Ok();
         }
