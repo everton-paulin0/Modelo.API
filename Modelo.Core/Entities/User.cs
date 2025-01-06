@@ -8,6 +8,10 @@ namespace Modelo.Core.Entities
 {
     public class User : BaseEntity
     {
+        public User()
+        {
+            
+        }
         public User(string userName, string emailAddress, EnumLevel level, bool isActive) : base()
         {
             UserName = userName;

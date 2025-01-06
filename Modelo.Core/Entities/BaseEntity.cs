@@ -13,12 +13,18 @@ namespace Modelo.Core.Entities
             
             CreatedAt = DateTime.Now;
             UpdateAt = DateTime.Now;
-            IsActive = true;
+            IsDeleted = false;
+            
         }
 
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdateAt { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public void SetAsDeleted()
+        {
+            IsDeleted = true;
+        }
     }
 }

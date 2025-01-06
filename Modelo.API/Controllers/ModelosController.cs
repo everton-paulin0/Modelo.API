@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Modelo.API.Models;
 using Modelo.API.Persistence;
 using Modelo.API.Services;
+using Modelo.Core.Entities;
 
 namespace Modelo.API.Controllers
 {
@@ -51,6 +52,12 @@ namespace Modelo.API.Controllers
                 .Include(m=> m.Comment)
                 .SingleOrDefault(m => m.Id == id);
 
+
+            if (models is null)
+            {
+                return NotFound();
+            }
+
             var model = ModelViewModel.FromEntity(models);
 
             return Ok();
@@ -59,13 +66,60 @@ namespace Modelo.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, UpdateModelInputModel model)
         {
-            return NoContent ();
+            var models = _context.Models.SingleOrDefault(m => m.Id == id);
+
+            if (models is null)
+            {
+                return NotFound();
+            }
+
+            models.Update(model.FullName, model.Age);
+
+            _context.Models.Update(models);
+            _context.SaveChanges();
+
+            return NoContent();
+
+            
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            var models = _context.Models.SingleOrDefault(m => m.Id == id);
+
+            if (models is null)
+            {
+                return NotFound();
+            }
+            
+            models.SetAsDeleted();
+
+            _context.Models.Update(models);
+            _context.SaveChanges();
+
+            return NoContent();
+            
+        }
+
+        [HttpPost("{id}/comments")]
+
+        public IActionResult PostComment(int id, CreateModelCommentInputModel model)
+        {
+            var models = _context.Models.SingleOrDefault(m => m.Id == id);
+
+            if (models is null)
+            {
+                return NotFound();
+            }
+
+            var comment = new ModelComment(model.Content, model.IdModel, model.IdUser);
+
+            _context.ModelComments.Add(comment);
+            _context.SaveChanges();
+
             return Ok();
+
         }
     }
 }

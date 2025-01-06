@@ -8,6 +8,10 @@ namespace Modelo.Core.Entities
 {
     public class ModelComment : BaseEntity
     {
+        public ModelComment()
+        {
+            
+        }
         public ModelComment(string content, int idModel, int idUser) :base()
         {
             Content = content;            

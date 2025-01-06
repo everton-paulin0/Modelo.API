@@ -11,6 +11,10 @@ namespace Modelo.API.Models
         public string EmailAddress { get; set; }
         public EnumLevel Level { get; set; }
 
-        
+        public bool IsActive { get; set; }
+
+
+        public User ToEntity()
+            => new User(UserName, EmailAddress, Level,IsActive);
     }
 }
