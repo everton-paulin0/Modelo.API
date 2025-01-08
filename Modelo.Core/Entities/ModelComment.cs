@@ -17,6 +17,8 @@ namespace Modelo.Core.Entities
             Content = content;            
             IdModel = idModel;            
             IdUser = IdUser;
+
+            
         }
 
         public string Content { get; set; }

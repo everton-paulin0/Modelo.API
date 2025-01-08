@@ -26,15 +26,19 @@ namespace Modelo.API.Persistence
 
                     e.Property(u=> u.UserName).HasMaxLength(50);
                     e.Property(u=> u.EmailAddress).HasMaxLength(50);
-                    
-                    
-                    
+
+                    e.HasMany(u => u.Model)
+                    .WithOne(u => u.UserName)
+                    .HasForeignKey(u => u.IdUser)
+                    .OnDelete(DeleteBehavior.Restrict);
                 });
 
             builder
                 .Entity<Model>(e=>
                 {
-                    e.HasKey(e=>e.Id);
+                    e.HasKey(e => e.Id);
+
+                    e.HasMany(m => m.Comment);
 
                     
                     

@@ -12,12 +12,13 @@ namespace Modelo.Core.Entities
         {
             
         }
-        public User(string userName, string emailAddress, EnumLevel level, bool isActive) : base()
+        public User(string userName, string emailAddress, EnumLevel level, Model fullName, bool isActive) : base()
         {
             UserName = userName;
             EmailAddress = emailAddress;
+            FullName = fullName;
 
-
+            Model = [];
             Level = EnumLevel.Comum;
 
             IsActive = true;
@@ -26,7 +27,9 @@ namespace Modelo.Core.Entities
         public string UserName { get; set; }
         public string EmailAddress { get; set; }
         public EnumLevel Level { get; set; }
-        public Model Model { get; set; }
+
+        public Model FullName { get; set; }
+        public List<Model> Model { get; set; }
         public bool IsActive { get; set; }
     }
 }
