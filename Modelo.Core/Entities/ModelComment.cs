@@ -12,19 +12,18 @@ namespace Modelo.Core.Entities
         {
             
         }
-        public ModelComment(string content, int idModel, int idUser) :base()
-        {
-            Content = content;            
-            IdModel = idModel;            
-            IdUser = IdUser;
 
-            
+        public ModelComment(string content, int personId, int userId):base()
+        {
+            Content = content;
+            PersonId = personId;
+            UserId = userId;
         }
 
         public string Content { get; set; }
-        public int IdModel { get; set; }
-        public Model Model { get; set; }
-        public int IdUser { get; set; }
+        public int PersonId { get; set; }
+        public Person Person { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Modelo.Core;
+﻿using Modelo.Core.Entities.Enum;
 
 namespace Modelo.API.Models
 {

@@ -19,9 +19,10 @@ namespace Modelo.API.Controllers
         [HttpPost]
         public IActionResult Post(CreateUserInputModel model)
         {
-            var user = new User(model.UserName, model.EmailAddress, model.Level, model.IsActive);
+            var user = new User(model.UserName, model.EmailAddress);
 
             _context.Users.Add(user);
+            _context.SaveChanges();
 
             
             return NoContent();
@@ -45,12 +46,19 @@ namespace Modelo.API.Controllers
 
             var model =UserViemModel.FromEntity(user);
 
-            return Ok();
+            return Ok(model);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, UpdateModelInputModel model)
+        public IActionResult Put(int id, UpdateUserInputModel model)
         {
+            var user = _context.Users.SingleOrDefault(u => u.Id == id);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
             return NoContent();
         }
 

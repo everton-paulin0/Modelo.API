@@ -2,26 +2,25 @@
 
 namespace Modelo.API.Models
 {
-    public class ModelCommentViewModel
+    public class ModelCommentViewModel: BaseEntity
     {
-        public ModelCommentViewModel(int id, string content, int userId, string userName, int idModel, string nameModel)
+        public ModelCommentViewModel( string content, int userId,int personId)
         {
-            Id = id;
             Content = content;
-            UserId = userId;
-            UserName = userName;
-            IdModel = idModel;
-            NameModel = nameModel;
+            UserId = userId;            
+            PersonId = personId;
+            
         }
 
-        public int Id { get; set; }
+        
         public string Content { get; set; }
         public int UserId{ get; set; }
-        public string UserName { get; set; }
-        public int IdModel { get; set; }
-        public string NameModel { get; set; }
+        public User User { get; set; }
+        public int PersonId { get; set; }
+        public Person Person { get; set; }
+
 
         public static ModelCommentViewModel FromEntity(ModelComment entity)
-            => new ModelCommentViewModel(entity.Id, entity.Content, entity.IdUser, entity.User.UserName, entity.IdModel, entity.Model.FullName);
+            => new ModelCommentViewModel(entity.Content, entity.PersonId, entity.UserId);
     }
 }

@@ -5,10 +5,11 @@ namespace Modelo.API.Models
     public class CreateModelCommentInputModel
     {
         public string Content { get; set; }
-        public int IdModel { get; set; }
-        public int IdUser { get; set; }
+        public int PersonId { get; set; }
+        public int UserId { get; set; }
+
 
         public ModelComment ToEntity()
-            => new ModelComment(Content, IdModel, IdUser);
+            => new ModelComment(Content, PersonId, UserId);
     }
 }

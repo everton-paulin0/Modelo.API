@@ -10,7 +10,7 @@ namespace Modelo.API.Persistence
             
         }
 
-        public DbSet<Model> Models { get; set; }
+        public DbSet<Person> People { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<ModelComment> ModelComments { get; set; }
 
@@ -23,25 +23,12 @@ namespace Modelo.API.Persistence
                 {
                     e.HasKey(u=> u.Id);
                     
-
-                    e.Property(u=> u.UserName).HasMaxLength(50);
-                    e.Property(u=> u.EmailAddress).HasMaxLength(50);
-
-                    e.HasMany(u => u.Model)
-                    .WithOne(u => u.UserName)
-                    .HasForeignKey(u => u.IdUser)
-                    .OnDelete(DeleteBehavior.Restrict);
                 });
 
             builder
-                .Entity<Model>(e=>
+                .Entity<Person>(e=>
                 {
-                    e.HasKey(e => e.Id);
-
-                    e.HasMany(m => m.Comment);
-
-                    
-                    
+                    e.HasKey(m => m.Id);
                 });
 
             builder
@@ -49,11 +36,7 @@ namespace Modelo.API.Persistence
                 {
                     e.HasKey(m => m.Id);
 
-                    e.HasOne(m=> m.Model)
-                    .WithMany(m=> m.Comment)
-                    .HasForeignKey(m=> m.IdModel)
-                    .OnDelete(DeleteBehavior.Restrict);
-
+                   
                 });
 
 
