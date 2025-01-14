@@ -25,5 +25,12 @@ namespace Modelo.Core.Entities
         public bool IsActive { get; set; }
         public List<Person> OwnedPeople { get; set; }
         public List<ModelComment> Comments { get; set; }
+
+        public void Update(string userName, string emailAddress)
+        {
+            UserName = userName;
+            EmailAddress = emailAddress;
+            UpdateAt = DateTime.Now;
+        }
     }
 }

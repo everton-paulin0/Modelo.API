@@ -22,6 +22,11 @@ namespace Modelo.API.Persistence
                 .Entity<User>(e=>
                 {
                     e.HasKey(u=> u.Id);
+
+                    e.HasMany(u=> u.OwnedPeople)
+                    .WithOne(u=> u.User)
+                    .HasForeignKey(u=> u.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
                     
                 });
 
@@ -29,12 +34,22 @@ namespace Modelo.API.Persistence
                 .Entity<Person>(e=>
                 {
                     e.HasKey(m => m.Id);
+
+                    e.HasOne(m => m.User)
+                    .WithMany(u => u.OwnedPeople)
+                    .HasForeignKey(m => m.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
                 });
 
             builder
                 .Entity<ModelComment>(e=>
                 {
                     e.HasKey(m => m.Id);
+
+                    e.HasOne(m => m.Person)
+                    .WithMany(m => m.Comments)
+                    .HasForeignKey(m => m.PersonId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
                    
                 });

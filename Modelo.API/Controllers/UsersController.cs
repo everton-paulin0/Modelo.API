@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Modelo.API.Models;
 using Modelo.API.Persistence;
 using Modelo.Core.Entities;
+using System;
 using System.Runtime.InteropServices;
 
 namespace Modelo.API.Controllers
@@ -17,9 +19,9 @@ namespace Modelo.API.Controllers
             _context = context;
         }
         [HttpPost]
-        public IActionResult Post(CreateUserInputModel model)
+        public IActionResult Post(CreateUserInputModel users)
         {
-            var user = new User(model.UserName, model.EmailAddress);
+            var user = new User(users.UserName, users.EmailAddress);
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -29,9 +31,15 @@ namespace Modelo.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(string search)
+        public IActionResult Get(string search = "")
         {
-            return Ok();
+            var users = _context.Users
+                .Include(p => p.OwnedPeople)
+               .Where(p => !p.IsDeleted).ToList();
+
+            var model = users.Select(UserItemViemModel.FromEntity).ToList();
+
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
@@ -44,7 +52,7 @@ namespace Modelo.API.Controllers
                 return NotFound();
             }
 
-            var model =UserViemModel.FromEntity(user);
+            var model =UserItemViemModel.FromEntity(user);
 
             return Ok(model);
         }
@@ -59,13 +67,28 @@ namespace Modelo.API.Controllers
                 return NotFound();
             }
 
+            user.Update(user.UserName, user.EmailAddress);
+
+            _context.Users.Update(user);
+            _context.SaveChanges();
+
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return Ok();
+            var user = _context.Users.SingleOrDefault(u => u.Id == id);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+            user.SetAsDeleted();
+            _context.Users.Update(user);
+            _context.SaveChanges();
+
+            return NoContent();
         }
     }
 }

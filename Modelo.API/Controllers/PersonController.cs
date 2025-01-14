@@ -18,9 +18,10 @@ namespace Modelo.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(CreateModeloInputModel people)
+        public IActionResult Post(CreatePersonInputModel people)
         {
-            var person = people.ToEntity();
+            //var person = people.ToEntity();
+            var person = new Person(people.FullName, people.DocumentNumber, people.BirthDate, people.UserId);
 
             _context.People.Add(person);
             _context.SaveChanges();
@@ -37,7 +38,7 @@ namespace Modelo.API.Controllers
 
             var model = people.Select(PersonItemViewModel.FromEntity).ToList();
 
-            return Ok();
+            return Ok(people);
         }
 
 

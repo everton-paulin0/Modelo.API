@@ -2,9 +2,9 @@
 
 namespace Modelo.API.Models
 {
-    public class UserViemModel
+    public class UserItemViemModel
     {
-        public UserViemModel(int id, string userName, string emailAddress)
+        public UserItemViemModel(int id, string userName, string emailAddress)
         {
             Id = id;
             UserName = userName;
@@ -15,7 +15,7 @@ namespace Modelo.API.Models
         public string UserName { get; set; }
         public string EmailAddress { get; set; }
 
-        public static UserViemModel FromEntity(User entity)
-            => new UserViemModel(entity.Id, entity.UserName, entity.EmailAddress);
+        public static UserItemViemModel FromEntity(User entity)
+            => new UserItemViemModel(entity.Id, entity.UserName, entity.EmailAddress);
     }
 }
