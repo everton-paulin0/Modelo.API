@@ -20,20 +20,21 @@ namespace Modelo.API.Controllers
         [HttpPost]
         public IActionResult Post(CreatePersonInputModel people)
         {
-            //var person = people.ToEntity();
-            var person = new Person(people.FullName, people.DocumentNumber, people.BirthDate, people.UserId);
+            var person = people.ToEntityPerson();
+            
 
-            _context.People.Add(person);
+               _context.People.Add(person);
             _context.SaveChanges();
 
             return NoContent();
+            
         }
 
         [HttpGet]
-        public IActionResult Get(string search = "")
+        public IActionResult Get()
         {
             var people = _context.People
-                .Include(p => p.User)
+                //.Include(p => p.User)
                 .Where(p => !p.IsDeleted).ToList();
 
             var model = people.Select(PersonItemViewModel.FromEntity).ToList();
@@ -46,8 +47,8 @@ namespace Modelo.API.Controllers
         public IActionResult GetById(int id)
         {
             var people =_context.People
-                .Include (p => p.User)
-                .Include(p => p.Comments)
+                //.Include (p => p.User)
+                //.Include(p => p.Comments)
                 .SingleOrDefault(p=> p.Id ==id);
 
             var model = PersonItemViewModel.FromEntity(people);

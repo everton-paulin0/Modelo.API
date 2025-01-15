@@ -9,8 +9,8 @@ namespace Modelo.API.Models
         public DateTime BirthDate { get; set; }
         public int UserId { get; set; }
 
-        public Person ToEntity()
-            => new Person(FullName, DocumentNumber, BirthDate, UserId);
+        public Person ToEntityPerson()
+            => new (FullName, DocumentNumber, BirthDate, UserId);
         
 
     }
