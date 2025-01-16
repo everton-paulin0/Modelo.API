@@ -9,11 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IConfigService, ConfigService>();
 
-//builder.Services.AddDbContext<ModelDbContext>(o => o.UseInMemoryDatabase("ModelDb"));
+builder.Services.AddDbContext<ModelDbContext>(o => o.UseInMemoryDatabase("ModelDb"));
 
-var connectionString = builder.Configuration.GetConnectionString("ModelDB");
+//var connectionString = builder.Configuration.GetConnectionString("ModelDB");
 
-builder.Services.AddDbContext<ModelDbContext>(o => o.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<ModelDbContext>(o => o.UseSqlServer(connectionString));
 
 builder.Services.AddExceptionHandler<ApiExceptionHandler>();
 builder.Services.AddProblemDetails();
